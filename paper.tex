@@ -1,0 +1,153 @@
+\documentclass[10pt, conference]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{VeriAjo: Verifiable Adaptive Group Finance for Trust-Aware Rotational Savings}
+
+\author{\IEEEauthorblockN{Anthony Uchenna Eneh}
+\IEEEauthorblockA{Kumoh National Institute of Technology}}
+
+\maketitle
+
+\begin{abstract}
+Rotational savings and community-based mutual finance remain essential financial infrastructure for many households, especially where formal credit is limited or expensive. Yet these systems are often fragile: contribution failures, payout disputes, opaque rule changes, and weak auditability can erode trust and destabilize the group. This paper introduces VeriAjo, a verifiable adaptive group finance platform that keeps the social flexibility of community savings while making contribution, payout, and governance rules transparent, auditable, and dynamically adjustable. The core idea is to replace fixed, manually enforced group rules with an on-chain policy engine that can adapt to member reliability, liquidity stress, and exceptional events such as hardship or emergency needs. The result is a trust-aware system that supports transparent governance without flattening the human realities that make group finance useful in the first place.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Rotational savings, group finance, blockchain governance, adaptive policies, microfinance, auditability.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Group finance is one of the world’s most widely used but least formalized financial infrastructures. Across communities, diasporas, informal worker networks, and small savings clubs, people pool funds to survive income volatility, handle emergencies, and access liquidity without relying entirely on formal banking~\cite{orr2006rotating,worldbank2022financialinclusion}. The model works because it is socially legible: members know one another, rules are understood informally, and trust is reinforced by repeated participation.
+
+The same informality, however, also creates a familiar set of failure modes. Members default on contributions, payout priority becomes contested, hardship exceptions are applied inconsistently, and group leaders are forced to make decisions that are difficult to audit after the fact. In short, the system is valuable precisely where it is least structured.
+
+This paper asks a simple question: \emph{how can group finance become more trustworthy and adaptive without losing the social flexibility that makes it work?} VeriAjo answers this by introducing an auditable policy layer for contribution scheduling, payout priority, hardship handling, and dispute resolution. Instead of treating the group as a fixed-rule ledger, VeriAjo treats it as a governed financial process whose rules can evolve while remaining transparent and replayable.
+
+\textbf{Contributions.} This paper makes four contributions:
+\begin{itemize}
+    \item a motivation and design framing for verifiable adaptive group finance;
+    \item an on-chain governance model for contribution, payout, and hardship policies;
+    \item a trust-aware member state model that can support adaptive rules without arbitrary discretion;
+    \item a compact evaluation plan for fairness, dispute handling, and operational overhead.
+\end{itemize}
+
+\section{Why This Work, and Why Now?}
+The timing is important. Financial stress is high, informal finance is still widespread, and mobile access has lowered the barrier to digital coordination. But the tools available today are usually too shallow: they can collect money or track balances, but they rarely provide strong guarantees around policy enforcement, transparent exceptions, or dispute reconstruction.
+
+At the same time, modern verifiable systems make it practical to encode group rules as auditable policies rather than as hidden administrative decisions~\cite{shi2016edge}. This is the key opportunity: not to replace group finance, but to make it safer, more adaptive, and more resilient under stress.
+
+\section{Problem Setting}
+We consider a group savings or mutual-finance setting where members contribute periodically into a shared pool and receive payouts according to a rotating, priority-based, or event-driven schedule. The system must support:
+\begin{itemize}
+    \item standard periodic contributions,
+    \item payout ordering and exceptions,
+    \item emergency hardship handling,
+    \item member trust / reliability tracking,
+    \item and a traceable history of policy changes and decisions.
+\end{itemize}
+
+The challenge is not just correctness. It is \emph{governable correctness}: the group must be able to see why a contribution was deferred, why a payout was accelerated, or why a member was penalized or rewarded. In that sense, the problem is closely related to policy replay and decision transparency in other trust-sensitive systems~\cite{guo2017calibration,hendrycks2017baseline}.
+
+\section{Proposed Novelty: Adaptive, Verifiable Group Finance}
+VeriAjo introduces an adaptive policy layer that can change system behavior based on member and group conditions. The novelty is not a generic blockchain ledger. The novelty is \emph{policy-aware group finance}: contribution, payout, and exception rules that adapt to real conditions while staying auditable.
+
+The main policy dimensions are:
+\begin{itemize}
+    \item \textbf{Contribution adaptation:} allow temporary deferral or rescheduling when a member is under verified hardship.
+    \item \textbf{Payout adaptation:} prioritize or reorder payouts according to transparent rules, not ad hoc discretion.
+    \item \textbf{Trust-aware governance:} use history of reliability to support rule decisions without hard-coding social bias.
+    \item \textbf{Dispute replay:} reconstruct any contested decision from on-chain policy state and decision records.
+\end{itemize}
+
+This changes the question from "Did the system record the money?" to "Can the group replay and justify the decision that was made?"
+
+\section{System Design}
+At a high level, VeriAjo includes four components:
+\begin{enumerate}
+    \item a \textbf{member state layer} that tracks contribution history, reliability, and current standing;
+    \item a \textbf{policy engine} that evaluates contribution, payout, and hardship rules;
+    \item a \textbf{decision log} that records each exception, payout, and policy update;
+    \item a \textbf{governance interface} for group members to inspect rules and challenge decisions.
+\end{enumerate}
+
+Figure~\ref{fig:system} summarizes the concept.
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox{0.92\columnwidth}{\centering
+Contributions $\rightarrow$ policy engine $\rightarrow$ payout / defer / adjust \\
+\vspace{0.4em}
+Member state + decision log + auditable governance 
+}}
+\caption{Conceptual VeriAjo workflow.}
+\label{fig:system}
+\end{figure}
+
+\section{Evaluation Plan}
+Because this is a first-draft short paper, the evaluation should focus on the specific promises of the system rather than on broad benchmarking.
+
+The paper should evaluate four things:
+\begin{enumerate}
+    \item whether adaptive rules improve fairness under member stress,
+    \item whether policy changes remain transparent and replayable,
+    \item whether hardship handling reduces avoidable defaults,
+    \item and whether the governance overhead stays acceptable for small groups.
+\end{enumerate}
+
+A compact evaluation can be run with synthetic group-savings scenarios and, if available, a small pilot dataset from a real community group or test deployment.
+
+\begin{table}[t]
+\centering
+\caption{Suggested evaluation metrics for VeriAjo}
+\label{tab:eval}
+\begin{tabular}{lcc}
+\toprule
+Metric & What it measures & Why it matters \\
+\midrule
+Fairness & Payout / contribution treatment across members & Prevents bias and resentment \\
+Replayability & Can decisions be reconstructed later? & Supports trust and auditability \\
+Default recovery & How well the system handles stress & Preserves group stability \\
+Governance overhead & Time/effort to manage exceptions & Keeps the system usable \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A useful experimental comparison is:
+\begin{itemize}
+    \item \textbf{baseline A:} fixed-rule group finance,
+    \item \textbf{baseline B:} manual leader-mediated governance,
+    \item \textbf{VeriAjo:} adaptive, auditable policy enforcement.
+\end{itemize}
+
+The expected advantage of VeriAjo is not raw speed. It is reduced dispute ambiguity, better handling of exceptional cases, and stronger transparency when conditions change.
+
+\section{Why This Matters in the World Today}
+This work matters because many people already depend on informal finance to survive instability. They need systems that respect the social nature of group savings while reducing the damage caused by disputes, opaque decisions, and inconsistent enforcement.
+
+VeriAjo is useful because it addresses a real gap: existing apps can digitize the money flow, but they rarely digitize the governance in a trustworthy way. As financial stress grows and digital coordination becomes more common, the world needs systems that are not only efficient, but justifiable~\cite{worldbank2022financialinclusion}.
+
+\section{Conclusion}
+VeriAjo proposes a practical direction for modern group finance: make contribution, payout, and exception rules adaptive, but keep them verifiable. The key idea is that trust does not have to be informal to remain human. A group can still be social, flexible, and community-driven while also being auditable and fair.
+
+That is why the work matters now: it speaks to a financial reality that already exists, and it gives that reality a more trustworthy digital form.
+
+\begin{thebibliography}{99}
+\bibitem{orr2006rotating} J. Orr, ``Rotating savings and credit associations in Africa: Theory and practice,'' Journal of African Finance, 2006.
+\bibitem{worldbank2022financialinclusion} World Bank, ``Global financial inclusion and digital access trends,'' World Bank Policy Notes, 2022.
+\bibitem{shi2016edge} W. Shi et al., ``Edge computing: Vision and challenges,'' IEEE Internet of Things Journal, vol. 3, no. 5, pp. 637--646, 2016.
+\bibitem{guo2017calibration} C. Guo et al., ``On calibration of modern neural networks,'' ICML, 2017.
+\bibitem{hendrycks2017baseline} D. Hendrycks and K. Gimpel, ``A baseline for detecting misclassified and out-of-distribution examples in neural networks,'' ICLR, 2017.
+\bibitem{shi2020edgeai} W. Shi and S. Dustdar, ``Edge AI: On-demand accelerated deep neural network inference via edge computing,'' IEEE Network, vol. 34, no. 1, pp. 174--182, 2020.
+\end{thebibliography}
+
+\end{document}
