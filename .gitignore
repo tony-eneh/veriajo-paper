@@ -1,6 +1,105 @@
+# Core LaTeX build artifacts
 *.aux
-*.bbl
-*.blg
-*.log
+*.lof
+*.lot
+*.fls
 *.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.lb
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+*.xdv
+*.dvi
+*.ps
+
+# Logs and diagnostics
+*.log
+*.tlg
+*.thm
+*.ilg
+*.ind
+*.idx
+*.mw
+*.nav
+*.snm
+*.vrb
+*.maf
+*.mtc
+*.mtc0
+*.pyg
+*.listing
+
+# Glossaries, nomenclature, and acronyms
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.ist
+*.nlg
+*.nlo
+*.nls
+
+# Bibliography and references
+*.bib.bak
+*.bib.sav
+
+# MakeIndex, xindy, splitindex
+*.idx.old
+*.ind.old
+*.xdy
+
+# latexmk and arara
+*.lol
+*.lox
+*.dpth
+*.backup
+_region_*.tex
+
+# Beamer and presentations
+*.fma
+*.tns
+
+# minted and pythontex
+_minted-*
+*.pygstyle
+pythontex-files-*/
+
+# sagetex
+*.sagetex.sage
+*.sagetex.py
+*.sagetex.scmd
+
+# TikZ/externalization
+*-figure*.pdf
+*-figure*.dpth
+*-figure*.md5
+*.tikz
+
+# Generated documents
 *.pdf
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
